@@ -1,0 +1,7 @@
+import express from "express"
+const router = express.Router();
+import {Attendence_log} from "../controllers/attendence_log.controller.js"
+
+router.get('/attendance_log', Attendence_log);
+
+export default router;
