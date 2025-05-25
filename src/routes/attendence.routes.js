@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { rfidLogic } from "../controllers/rfidLogic.controller.js";
+import { markAttendance } from "../controllers/rfidLogic.controller.mjs";
 const router = Router();
-router.route("/rfidAttendence").post(rfidLogic);
+router.route("/rfidAttendence").post(markAttendance);
 
 export default router;

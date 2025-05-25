@@ -1,15 +1,15 @@
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
+import { Subject } from "../models/subject.model.js";
 import { Attendance } from "../models/attendence.models.js";
+import moment from "moment";
+import nodemailer from "nodemailer";
 
-const rfidLogic = asyncHandler(async (req, res) => {
+const markAttendance = async (req, res) => {
   try {
     const { rfid } = req.body;
     const student = await User.findOne({ rfid });
 
-    if (!student) throw new ApiError(404, "student not found!");
+    if (!student) return res.status(404).json({ message: "Student not found" });
     console.log("Student info:", student);
 
     const now = moment();
@@ -20,14 +20,15 @@ const rfidLogic = asyncHandler(async (req, res) => {
     console.log("studentname:", student.name);
     console.log("Current Time:", currentTime);
 
-    const subject = await User.findOne({
+    const subject = await Subject.findOne({
       semester: student.semester,
       day: currentDay,
       startTime: { $lte: currentTime },
       endTime: { $gte: currentTime },
     });
 
-    if (!subject) throw new ApiError(404, "subject not found");
+    if (!subject)
+      return res.status(404).json({ message: "No subject at this time" });
 
     const attendance = new Attendance({
       student: student._id,
@@ -37,11 +38,12 @@ const rfidLogic = asyncHandler(async (req, res) => {
 
     await attendance.save();
 
+    // ✅ Send Email to Parent
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: "gmail", // Or use your own SMTP settings
       auth: {
-        user: "sartaansari121sa@gmail.com",
-        pass: "tvkv pdtw pkor hmzh",
+        user: "sartaansari121sa@gmail.com", // ✅ Replace with your email
+        pass: "tvkv pdtw pkor hmzh", // ✅ Replace with app-specific password
       },
     });
 
@@ -65,17 +67,14 @@ const rfidLogic = asyncHandler(async (req, res) => {
     await transporter.sendMail(mailOptions);
 
     return res
-      .status(201)
-      .json(
-        new ApiResponse(
-          200,
-          mailOptions,
-          "Attendance marked and email sent to parent"
-        )
-      );
+      .status(200)
+      .json({ message: "Attendance marked and email sent to parent" });
   } catch (error) {
     console.error("❌ Error marking attendance:", error.message);
-    return res.status(500).json({ message: 'Server error', error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
   }
-});
-export { rfidLogic };
+};
+
+export { markAttendance };
