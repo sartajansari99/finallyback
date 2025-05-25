@@ -1,13 +1,15 @@
-import { Subject } from "../models/subject.model.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
+import { Subject } from "../models/subject.model.js"; // Adjust path if needed
 
-const createSubject = asyncHandler(async (req, res) => {
+// @desc    Add new subject
+// @route   POST /api/subjects
+// @access  Public or Protected (based on your setup)
+const createSubject = async (req, res) => {
   try {
     const { name, code, semester, startTime, endTime, day } = req.body;
-    
+
+    // Basic validation
     if (!name || !code || !semester || !startTime || !endTime || !day) {
-      throw new ApiError(404, "all field required");
+      return res.status(400).json({ message: "All fields are required." });
     }
 
     const newSubject = new Subject({
@@ -18,7 +20,7 @@ const createSubject = asyncHandler(async (req, res) => {
       endTime,
       day,
     });
-    console.log(newSubject);
+
     const savedSubject = await newSubject.save();
     res.status(201).json({
       message: "Subject saved successfully",
@@ -28,17 +30,18 @@ const createSubject = asyncHandler(async (req, res) => {
     console.error("Error saving subject:", err);
     res.status(500).json({ message: "Server error" });
   }
-});
-const getAllSubjects = asyncHandler(async (req, res) => {
+};
+
+const getAllSubjects = async (req, res) => {
   try {
     const subjects = await Subject.find();
     res.status(200).json(subjects);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch subjects", error });
   }
-});
+};
 
-const updateSubject = asyncHandler(async (req, res) => {
+const updateSubject = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
 
@@ -53,9 +56,9 @@ const updateSubject = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Failed to update subject", error });
   }
-});
+};
 
-const deleteSubject = asyncHandler(async (req, res) => {
+const deleteSubject = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -67,6 +70,9 @@ const deleteSubject = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Failed to delete subject", error });
   }
-});
+};
+const myname = (req, res) => {
+  res.send("sartaj");
+};
 
-export { createSubject, getAllSubjects, updateSubject, deleteSubject };
+export { createSubject, getAllSubjects, updateSubject, deleteSubject, myname };

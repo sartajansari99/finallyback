@@ -32,7 +32,7 @@ app.use("/api/v1/admin", attendenceRoute);
 app.use("/api/v1/admin", subjectRoute);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/admin", Attendance_logRoute);
-app.use("/api/v1/admin", getusers);
+app.use("/api/v1/users", getusers);
 app.use("/api/v1/admin", total_Attendance);
 
 // http://localhost:8000/api/v1/users/register
