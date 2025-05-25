@@ -8,7 +8,7 @@ import {
 const router = Router();
 router.route("/createSubject").post(createSubject);
 router.route("/getAllSubjects").get(getAllSubjects);
-router.route("/updateSubject:id").put(updateSubject);
-router.route("/deleteSubject:id").delete(deleteSubject);
+router.route("/updateSubject/:id").put(updateSubject);
+router.route("/deleteSubject/:id").delete(deleteSubject);
 
 export default router;
