@@ -3,11 +3,13 @@ import { Subject } from "../models/subject.model.js"; // Adjust path if needed
 // @desc    Add new subject
 // @route   POST /api/subjects
 // @access  Public or Protected (based on your setup)
+import moment from "moment";
+import { Subject } from "../models/subject.model.js";
+
 const createSubject = async (req, res) => {
   try {
     const { name, code, semester, startTime, endTime, day } = req.body;
 
-    // Basic validation
     if (!name || !code || !semester || !startTime || !endTime || !day) {
       return res.status(400).json({ message: "All fields are required." });
     }
@@ -16,9 +18,9 @@ const createSubject = async (req, res) => {
       name,
       code,
       semester: semester.toString(),
-      startTime,
-      endTime,
-      day:day.toLowerCase(),
+      startTime: moment(startTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
+      endTime: moment(endTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
+      day: day.toLowerCase(),
     });
 
     const savedSubject = await newSubject.save();
@@ -28,7 +30,7 @@ const createSubject = async (req, res) => {
     });
   } catch (err) {
     console.error("Error saving subject:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
