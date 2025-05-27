@@ -15,7 +15,7 @@ const createSubject = async (req, res) => {
     const newSubject = new Subject({
       name,
       code,
-      semester,
+      semester: semester.toString(),
       startTime,
       endTime,
       day:day.toLowerCase(),
