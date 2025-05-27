@@ -13,7 +13,7 @@ const markAttendance = async (req, res) => {
     console.log("Student info:", student);
 
     const now = moment();
-    const currentDay = now.format("dddd");
+    const currentDay = now.format("dddd").toLowerCase();
     const currentTime = now.format("HH:mm");
 
     console.log("Current Day:", currentDay);
