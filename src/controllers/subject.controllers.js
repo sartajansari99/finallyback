@@ -18,7 +18,7 @@ const createSubject = async (req, res) => {
       semester,
       startTime,
       endTime,
-      day,
+      day:day.toLowerCase(),
     });
 
     const savedSubject = await newSubject.save();
