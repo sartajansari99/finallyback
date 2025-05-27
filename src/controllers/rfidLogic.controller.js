@@ -50,11 +50,11 @@ const markAttendance = async (req, res) => {
     const mailOptions = {
       from: "sartaansari121sa@gmail.com",
       to: student.parentEmail,
-      subject: `Attendance Marked for ${student.name}`,
+      subject: `Attendance Marked for ${student.fullName}`,
       html: `
         <p>Dear Parent,</p>
         <p>Your child <strong>${
-          student.name
+          student.fullName
         }</strong> has marked attendance for the subject <strong>${
           subject.name
         } subject code ${subject.code}</strong> at <strong>${now.format(
