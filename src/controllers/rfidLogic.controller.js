@@ -17,12 +17,12 @@ const markAttendance = async (req, res) => {
     const currentTime = now.format("HH:mm");
 
     console.log("Current Day:", currentDay);
-    console.log("studentname:", student.name);
+    console.log("studentname:", student.fullName);
     console.log("Current Time:", currentTime);
 
     const subject = await Subject.findOne({
       semester: student.semester,
-      day: currentDay.toLowerCase(),
+      day: currentDay,
       startTime: { $lte: currentTime },
       endTime: { $gte: currentTime },
     });
