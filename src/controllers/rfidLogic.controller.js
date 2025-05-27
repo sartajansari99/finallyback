@@ -22,7 +22,7 @@ const markAttendance = async (req, res) => {
 
     const subject = await Subject.findOne({
       semester: student.semester.toString(),
-      day:day.toLowerCase(),
+      day: currentDay,
       startTime: { $lte: currentTime },
       endTime: { $gte: currentTime },
     });
