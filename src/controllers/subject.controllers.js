@@ -1,8 +1,3 @@
-import { Subject } from "../models/subject.model.js"; // Adjust path if needed
-
-// @desc    Add new subject
-// @route   POST /api/subjects
-// @access  Public or Protected (based on your setup)
 import moment from "moment";
 import { Subject } from "../models/subject.model.js";
 
