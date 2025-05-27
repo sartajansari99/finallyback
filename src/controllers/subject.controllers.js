@@ -1,3 +1,4 @@
+
 import moment from "moment";
 import { Subject } from "../models/subject.model.js";
 
@@ -12,7 +13,7 @@ const createSubject = async (req, res) => {
     const newSubject = new Subject({
       name,
       code,
-      semester: semester.toString(),
+      semester: newSubject.semester,
       startTime: moment(startTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
       endTime: moment(endTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
       day: day.toLowerCase(),
