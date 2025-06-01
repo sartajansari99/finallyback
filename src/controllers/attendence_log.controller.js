@@ -10,7 +10,9 @@ async function Attendence_log(req, res) {
 
     const formattedLogs = logs.map((entry) => ({
       fullName: entry.student ? entry.student.fullName : "Unknown Student",
-      avatar: entry.student? entry.avatar : "uploads/default.png",
+      avatar: entry.student
+        ? entry.student.avatar.replace("http://", "https://")
+        : "http://res.cloudinary.com/difbyc1pr/image/upload/v1748344859/t7ze3ose0rpfgbiniu5h.jpg",
       semester: entry.student ? entry.student.semester : "N/A",
       subject: entry.subject ? entry.subject.name : "Unknown Subject",
       subjectCode: entry.subject ? entry.subject.code : "N/A",
