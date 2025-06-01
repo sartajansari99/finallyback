@@ -1,33 +1,49 @@
-import {Attendance} from "../models/attendence.models.js";
+import { Attendance } from "../models/attendence.models.js";
 
 const getAttendanceCountBySubject = async (req, res) => {
   try {
     const result = await Attendance.aggregate([
       {
         $group: {
-          _id: "$subject",
-          totalAttendance: { $sum: 1 },
-        },
+          _id: {
+            subject: "$subject",
+            user: "$user"
+          },
+          totalAttendance: { $sum: 1 }
+        }
       },
       {
         $lookup: {
           from: "subjects",
-          localField: "_id",
+          localField: "_id.subject",
           foreignField: "_id",
-          as: "subjectDetails",
-        },
+          as: "subjectDetails"
+        }
       },
       {
-        $unwind: "$subjectDetails",
+        $unwind: "$subjectDetails"
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "_id.user",
+          foreignField: "_id",
+          as: "userDetails"
+        }
+      },
+      {
+        $unwind: "$userDetails"
       },
       {
         $project: {
-          subjectId: "$_id",
+          subjectId: "$_id.subject",
           subjectName: "$subjectDetails.name",
+          userId: "$_id.user",
+          fullName: "$userDetails.fullName",
           totalAttendance: 1,
-          _id: 0,
-        },
-      },
+          _id: 0
+        }
+      }
     ]);
 
     res.status(200).json(result);
