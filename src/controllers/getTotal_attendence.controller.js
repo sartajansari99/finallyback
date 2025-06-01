@@ -1,4 +1,4 @@
-import Attendance from "../routes/attendence.routes.js";
+import {Attendance} from "../models/attendence.models.js";
 
 const getAttendanceCountBySubject = async (req, res) => {
   try {
