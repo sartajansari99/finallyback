@@ -1,19 +1,20 @@
 import { User } from "../models/user.model.js";
 import { Subject } from "../models/subject.model.js";
 import { Attendance } from "../models/attendence.models.js";
-import moment from "moment";
+import moment from "moment-timezone";
 import nodemailer from "nodemailer";
 
 const markAttendance = async (req, res) => {
   try {
+    
     const { rfid } = req.body;
     const student = await User.findOne({ rfid });
 
     if (!student) return res.status(404).json({ message: "Student not found" });
     console.log("Student info:", student);
 
-    const now = moment();
-    const currentDay = now.format("dddd").toLowerCase();
+   const now = moment().tz("Asia/Kolkata");
+    const currentDay = now.format("dddd");
     const currentTime = now.format("HH:mm");
 
     console.log("Current Day:", currentDay);
