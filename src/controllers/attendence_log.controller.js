@@ -9,8 +9,8 @@ async function Attendence_log(req, res) {
       .sort({ timestamp: -1 });
 
     const formattedLogs = logs.map((entry) => ({
-      name: entry.student ? entry.student.name : "Unknown Student",
-      photo: entry.student?.photo || "uploads/default.png",
+      fullName: entry.student ? entry.student.fullName : "Unknown Student",
+      avatar: entry.student?.avatar || "uploads/default.png",
       semester: entry.student ? entry.student.semester : "N/A",
       subject: entry.subject ? entry.subject.name : "Unknown Subject",
       subjectCode: entry.subject ? entry.subject.code : "N/A",
