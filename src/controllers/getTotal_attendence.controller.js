@@ -7,32 +7,32 @@ const getAttendanceCountBySubject = async (req, res) => {
         $group: {
           _id: {
             subject: "$subject",
-            user: "$student"
+            user: "$student",
           },
-          totalAttendance: { $sum: 1 }
-        }
+          totalAttendance: { $sum: 1 },
+        },
       },
       {
         $lookup: {
           from: "subjects",
           localField: "_id.subject",
           foreignField: "_id",
-          as: "subjectDetails"
-        }
+          as: "subjectDetails",
+        },
       },
       {
-        $unwind: "$subjectDetails"
+        $unwind: "$subjectDetails",
       },
       {
         $lookup: {
           from: "users",
           localField: "_id.user",
           foreignField: "_id",
-          as: "userDetails"
-        }
+          as: "userDetails",
+        },
       },
       {
-        $unwind: "$userDetails"
+        $unwind: "$userDetails",
       },
       {
         $project: {
@@ -40,10 +40,11 @@ const getAttendanceCountBySubject = async (req, res) => {
           subjectName: "$subjectDetails.name",
           userId: "$_id.user",
           fullName: "$userDetails.fullName",
+          rfid: "$userDetails.rfid",
           totalAttendance: 1,
-          _id: 0
-        }
-      }
+          _id: 0,
+        },
+      },
     ]);
 
     res.status(200).json(result);
