@@ -10,7 +10,7 @@ async function Attendence_log(req, res) {
 
     const formattedLogs = logs.map((entry) => ({
       fullName: entry.student ? entry.student.fullName : "Unknown Student",
-      avatar: entry.student?.avatar || "uploads/default.png",
+      avatar: entry.student? entry.avatar : "uploads/default.png",
       semester: entry.student ? entry.student.semester : "N/A",
       subject: entry.subject ? entry.subject.name : "Unknown Subject",
       subjectCode: entry.subject ? entry.subject.code : "N/A",
