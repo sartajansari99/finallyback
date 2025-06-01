@@ -13,7 +13,7 @@ const createSubject = async (req, res) => {
     const newSubject = new Subject({
       name,
       code,
-      semester: newSubject.semester,
+      semester,
       startTime: moment(startTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
       endTime: moment(endTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
       day: day.toLowerCase(),
