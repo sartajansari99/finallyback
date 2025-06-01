@@ -7,7 +7,7 @@ const getAttendanceCountBySubject = async (req, res) => {
         $group: {
           _id: {
             subject: "$subject",
-            user: "$user"
+            user: "$student"
           },
           totalAttendance: { $sum: 1 }
         }
