@@ -16,7 +16,7 @@ const createSubject = async (req, res) => {
       semester,
       startTime: moment(startTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
       endTime: moment(endTime, ["hh:mm A", "HH:mm"]).format("HH:mm"),
-      day: day.toLowerCase(),
+      day,
     });
 
     const savedSubject = await newSubject.save();
