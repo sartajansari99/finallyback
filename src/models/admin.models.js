@@ -65,9 +65,9 @@ adminSchema.methods.generateAccessToken = function () {
       username: this.username,
       fullName: this.fullName,
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.ADMINACCESS_TOKEN_SECRET,
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+      expiresIn: process.env.ADMINACCESS_TOKEN_EXPIRY,
     }
   );
 };
@@ -76,9 +76,9 @@ adminSchema.methods.generateRefreshToken = function () {
     {
       _id: this._id,
     },
-    process.env.REFRESH_TOKEN_SECRET,
+    process.env.ADMINREFRESH_TOKEN_SECRET,
     {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+      expiresIn: process.env.ADMINREFRESH_TOKEN_EXPIRY,
     }
   );
 };
