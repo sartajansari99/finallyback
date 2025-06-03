@@ -55,12 +55,11 @@ const markAttendance = async (req, res) => {
     await attendance.save();
     res.status(200).json({ message: "Attendance marked successfully" });
 
-    // ✅ Send Email to Parent
     const transporter = nodemailer.createTransport({
-      service: "gmail", // Or use your own SMTP settings
+      service: "gmail", 
       auth: {
-        user: "sartaansari121sa@gmail.com", // ✅ Replace with your email
-        pass: "tvkv pdtw pkor hmzh", // ✅ Replace with app-specific password
+        user: "sartaansari121sa@gmail.com",
+        pass: "tvkv pdtw pkor hmzh",
       },
     });
 
