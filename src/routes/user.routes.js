@@ -6,8 +6,6 @@ import {
   refreshAccessToken,
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
-import { userverifyJWT } from "../middlewares/userAuth.middleware.js";
-
 const router = Router();
 
 router.route("/register").post(
@@ -26,7 +24,7 @@ router.route("/register").post(
 
 router.route("/login").post(loginUser);
 
-router.route("/logout").post(userverifyJWT, logoutUser);
+router.route("/logout").post(logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);
 
 export default router;
