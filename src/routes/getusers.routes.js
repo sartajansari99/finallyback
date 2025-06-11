@@ -6,7 +6,7 @@ import {
   getUserById,
 } from "../controllers/getusers.controller.js";
 
-router.get("/getalluser", verifyJWT, getAllUsers);
+router.get("/getalluser", getAllUsers);
 router.get("/getuserbyid", getUserById);
 
 export default router;
