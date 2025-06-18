@@ -4,26 +4,13 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-const allowedOrigins = [
-  "https://frontend-eta-ivory-62.vercel.app",
-  "http://localhost:3000",
-  "http://localhost:5173"
-];
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed for: " + origin));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
-}));
-
-// ✅ Handle preflight requests
-app.options("*", cors());
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
@@ -46,4 +33,4 @@ app.use("/api/v1/admin", Attendance_logRoute);
 app.use("/api/v1/admin", getusers);
 app.use("/api/v1/admin", total_Attendance);
 
-export { app };
+export { app};
